@@ -6,7 +6,8 @@ $SQL = Get-WmiObject win32_service | ?{$_.Name -like 'mssql*'} | select Name, Di
 $a = $SQL.Name
 $service = get-service | Where-Object {$_.Name -like "MSSQL*"}
 
-if($SQL.status -eq "Running") {
+# Check is SQL is already running
+if($SQL.state -eq "Running") {
 # Find SQL and stop it.
 Stop-Service $service
 } else {
@@ -24,8 +25,8 @@ net start $a /m
 
 # Run database restore
 Restore-SQLDatabase -ServerInstance $instance -Database "Master" -ReplaceDatabase -BackupFile "C:\Backup\master.bak"
-#Backup-SqlDatabase -ServerInstance "WIN-UGKOS30H3TJ\YODA" -Database "Master" -BackupFile "C:\Backup\master.bak"
-#Restore-SQLDatabase -ServerInstance "WIN-UGKOS30H3TJ\YODA" -Database "Master" -ReplaceDatabase -BackupFile "C:\Backup\master.bak"
+#Backup-SqlDatabase -ServerInstance $instance -Database "Master" -BackupFile "C:\Backup\master.bak"
+#Restore-SQLDatabase -ServerInstance $instance -Database "Master" -ReplaceDatabase -BackupFile "C:\Backup\master.bak"
 
 # stop service and restart as normal
 Start-Sleep 3 #wait for sql to stop
