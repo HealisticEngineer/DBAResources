@@ -31,5 +31,5 @@ Start-Sleep 3 #wait for sql to stop
 start-Service $service
 Get-WmiObject win32_service | ?{$_.Name -like 'mssql*'} | select State, name
 # if you are using SQL Agent uncomment below
-# $agent = get-service | Where-Object {$_.Name -like "SQLAgent*"}
-# start-Service $agent
+$agent = get-service | Where-Object {$_.Name -like "SQLAgent*"}
+start-Service $agent
