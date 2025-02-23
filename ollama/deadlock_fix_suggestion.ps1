@@ -33,14 +33,15 @@ $adapter.Fill($dataset) | Out-Null
 $connection.Close()
 # Return results
 $sql_deadlock = $dataset.Tables[0]
+$text = $sql_deadlock.XdlFile
 
 # Create prompt for Ollama
 $body = @{
-    model  = "$model"
+    model  = "qwen2.5-coder:14b"
     prompt = @"
-Can you explain the following with ASCII tables and diagrams as if I don't know SQL and suggest a fix.
+Can you explain the following with ascii tables and diagrams as if i don't know SQL and suggest a fix
 
-$($sql_deadlock.XdlFile)
+$text
 "@
     stream = $false
 } | ConvertTo-Json -Depth 10
