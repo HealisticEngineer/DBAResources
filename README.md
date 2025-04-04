@@ -13,6 +13,8 @@ The following scripts are available in this repository:
 - [CountVLF.sql](https://github.com/HealisticEngineer/DBAResources/blob/main/Server%20Query/CountVLF.sql): Find truncated virtual log files can cause transaction log backup to slow down as well as the database restore process.
 - [too_many_indexes.sql](https://github.com/HealisticEngineer/DBAResources/blob/main/Server%20Query/too_many_indexes.sql): Find tables that have large number of indexes and could create I/O overhead for Insert/Update and Delete transactions.
 - [DatabaseSettings.sql](https://github.com/HealisticEngineer/DBAResources/blob/main/Server%20Query/DatabaseSettings.sql): Checks some basic best practices like database compatablity, query store settigs and mixed page allocation.
+- [sql_query.conf](https://github.com/HealisticEngineer/DBAResources/blob/main/telegraf/sql_query.conf): Configuration file for Telegraf to collect SQL Server metrics using custom queries.
+- [query_store.sql](https://github.com/HealisticEngineer/DBAResources/blob/main/Query_store/query_store.sql): Retrieves query execution statistics and execution plans from the Query Store.
 
 ## Usage
 
