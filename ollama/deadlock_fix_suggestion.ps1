@@ -37,7 +37,7 @@ $text = $sql_deadlock.XdlFile
 
 # Create prompt for Ollama
 $body = @{
-    model  = "qwen2.5-coder:14b"
+    model  = "$model"
     prompt = @"
 Can you explain the following with ascii tables and diagrams as if i don't know SQL and suggest a fix
 
