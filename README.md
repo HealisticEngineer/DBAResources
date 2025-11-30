@@ -2,7 +2,38 @@
 
 DBAResources is a repository containing scripts that can help identify issues in SQL Server environments, such as unused indexes and nested views. These scripts are intended to be used as part of a health check for the environment.
 
-## Scripts
+## Database Creation Scripts
+
+### Create_Database_Native.ps1
+A PowerShell script that creates a SQL Server database using the native .NET SQL Client library (System.Data.SqlClient) instead of SMO. This script creates a database with best practices built-in:
+
+**Features:**
+- Creates PRIMARY filegroup for system objects (5MB, no growth)
+- Creates UserFG filegroup with 4 NDF files for user objects (5MB each, grows by 100MB, max unlimited per file)
+- Creates log file (5MB, grows by 128MB)
+- Automatically enables Query Store with standard configuration
+- Automatically enables Mixed Page Allocation
+- Configurable recovery model (SIMPLE or FULL) defaults to FULL
+- Supports both Windows and SQL Server Authentication
+
+**Usage:**
+```powershell
+# Windows Authentication
+.\Create_Database_Native.ps1 -Instance "localhost" -MyDBName "MyDatabase"
+
+# SQL Server Authentication
+$pass = ConvertTo-SecureString "YourPassword" -AsPlainText -Force
+.\Create_Database_Native.ps1 -Instance "localhost" -MyDBName "MyDatabase" -Username "sa" -Password $pass
+
+# With FULL recovery model
+.\Create_Database_Native.ps1 -Instance "localhost" -MyDBName "MyDatabase" -Username "sa" -Password $pass -RecoveryModel "FULL"
+```
+
+### Create Database.ps1
+Original database creation script using SQL Server Management Objects (SMO). Requires the SQLServer PowerShell module.
+
+
+## Diagnostic Scripts
 
 The following scripts are available in this repository:
 
