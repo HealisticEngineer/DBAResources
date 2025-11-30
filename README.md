@@ -11,10 +11,12 @@ A PowerShell script that creates a SQL Server database using the native .NET SQL
 - Creates PRIMARY filegroup for system objects (5MB, no growth)
 - Creates UserFG filegroup with 4 NDF files for user objects (5MB each, grows by 100MB, max unlimited per file)
 - Creates log file (5MB, grows by 128MB)
-- Automatically enables Query Store with standard configuration
+- Automatically enables Query Store with standard configuration (30-day retention, 1000MB max storage)
 - Automatically enables Mixed Page Allocation
+- Automatically enables Read Committed Snapshot Isolation (prevents read/write blocking)
 - Configurable recovery model (SIMPLE or FULL) defaults to FULL
 - Supports both Windows and SQL Server Authentication
+- Works with SQL Server on Windows and Linux
 
 **Usage:**
 ```powershell
@@ -32,6 +34,8 @@ $pass = ConvertTo-SecureString "YourPassword" -AsPlainText -Force
 ### Create Database.ps1
 Original database creation script using SQL Server Management Objects (SMO). Requires the SQLServer PowerShell module.
 
+### Test_SQL_Connection.ps1
+Diagnostic tool to test SQL Server connectivity with multiple connection string variations. Useful for troubleshooting SSPI authentication issues and identifying the correct connection string format for your environment.
 
 ## Diagnostic Scripts
 
@@ -44,6 +48,7 @@ The following scripts are available in this repository:
 - [CountVLF.sql](https://github.com/HealisticEngineer/DBAResources/blob/main/Server%20Query/CountVLF.sql): Find truncated virtual log files can cause transaction log backup to slow down as well as the database restore process.
 - [too_many_indexes.sql](https://github.com/HealisticEngineer/DBAResources/blob/main/Server%20Query/too_many_indexes.sql): Find tables that have large number of indexes and could create I/O overhead for Insert/Update and Delete transactions.
 - [DatabaseSettings.sql](https://github.com/HealisticEngineer/DBAResources/blob/main/Server%20Query/DatabaseSettings.sql): Checks some basic best practices like database compatablity, query store settigs and mixed page allocation.
+- [Suggest_partitioning.sql](https://github.com/HealisticEngineer/DBAResources/blob/main/Server%20Query/Suggest_partitioning.sql): Identifies tables with over 1 million rows and shows their partition status, suggesting candidates for table partitioning. Uses snapshot isolation to prevent locking.
 - [sql_query.conf](https://github.com/HealisticEngineer/DBAResources/blob/main/telegraf/sql_query.conf): Configuration file for Telegraf to collect SQL Server metrics using custom queries.
 - [query_store.sql](https://github.com/HealisticEngineer/DBAResources/blob/main/Query_store/query_store.sql): Retrieves query execution statistics and execution plans from the Query Store.
 

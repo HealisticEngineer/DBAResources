@@ -156,6 +156,11 @@ LOG ON
     $mixedPageCmd.CommandText = "ALTER DATABASE [$MyDBName] SET MIXED_PAGE_ALLOCATION ON"
     $mixedPageCmd.ExecuteNonQuery() | Out-Null
     
+    # Enable Read Committed Snapshot Isolation (always on)
+    $snapshotCmd = $connection.CreateCommand()
+    $snapshotCmd.CommandText = "ALTER DATABASE [$MyDBName] SET READ_COMMITTED_SNAPSHOT ON"
+    $snapshotCmd.ExecuteNonQuery() | Out-Null
+    
     # Enable Query Store (always on)
     $queryStoreCmd = $connection.CreateCommand()
     $queryStoreCmd.CommandText = @"
@@ -172,7 +177,7 @@ ALTER DATABASE [$MyDBName] SET QUERY_STORE = ON
 "@
     $queryStoreCmd.ExecuteNonQuery() | Out-Null
     
-    Write-Host "Database configuration completed (Query Store and Mixed Page Allocation enabled)"
+    Write-Host "Database configuration completed (Query Store, Mixed Page Allocation, and Read Committed Snapshot enabled)"
     
     # Now query and display the database information
     $connection.ChangeDatabase($MyDBName)
