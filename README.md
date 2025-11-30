@@ -34,9 +34,6 @@ $pass = ConvertTo-SecureString "YourPassword" -AsPlainText -Force
 ### Create Database.ps1
 Original database creation script using SQL Server Management Objects (SMO). Requires the SQLServer PowerShell module.
 
-### Test_SQL_Connection.ps1
-Diagnostic tool to test SQL Server connectivity with multiple connection string variations. Useful for troubleshooting SSPI authentication issues and identifying the correct connection string format for your environment.
-
 ## Diagnostic Scripts
 
 The following scripts are available in this repository:
